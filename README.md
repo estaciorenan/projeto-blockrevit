@@ -1,4 +1,4 @@
-# Big Game Survey 
+# Projeto Blocks Revit 
 [![NPM](https://img.shields.io/npm/l/react)](https://github.com/devsuperior/sds1-wmazoni/blob/master/LICENSE) 
 # Sobre o projeto
 Projeto Blocks Revit.
@@ -21,7 +21,7 @@ Pré-requisitos: npm / yarn
 # clonar repositório
 git clone https://github.com/estaciorenan/projeto-blocksrevit.git
 # entrar na pasta do projeto front end web
-cd front-web
+cd blocks
 # instalar dependências
 yarn install
 # executar o projeto
