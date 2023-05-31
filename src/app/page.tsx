@@ -1,113 +1,179 @@
-import Image from 'next/image'
+"use client"
+import {
+  Flex,
+  Image,
+  Card,
+  CardBody,
+  Heading,
+  Text,
+  Stack,
+  Divider,
+  CardFooter,
+  ButtonGroup,
+  Button,
+  Box,
+  Container,
+  CardHeader,
+  Spinner
+} from '@chakra-ui/react';
+import React, { useEffect, useState } from 'react';
+import { IFamilies } from './interfaces/interfaces';
+import { api } from './services/api';
+
 
 export default function Home() {
+  const [skip, setSkip] = useState<number>(0),
+    [take, setTake] = useState<number>(20),
+    [dataFamilies, setDataFamilies] = useState<IFamilies | any>()
+
+  const fetchAllData = async () => {
+    try {
+      const response = await api.get<IFamilies | any>(`https://test-candidaturas-front-end.onrender.com/families?skip=${skip}&take=${take}`)
+        .then((r) => {
+          return { data: r.data }
+        });
+      setDataFamilies(response.data)
+    } catch (error) {
+
+    }
+  }
+
+  useEffect(() => {
+    fetchAllData()
+  }, [])
+
+  console.log(dataFamilies)
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">src/app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+    <>
+      <header>
+        {/* ----------------------------------------advertising----------------------- */}
+        <Flex w='full'
+          className='advertising'
+          justifyContent='center'
+          alignItems='center'
+          height={['0px', '47px', '67px']}
+        >
+          <Text className='advertising-text' fontFamily='18px' color='#fff'>
+            Não limite sua criatividade, junte-se a familia Blocks por apenas <span className='font-bold'>BRL 19,99</span>
+            <ButtonGroup className='button-advertising' gap='4' justifyContent='center'>
+              Quero ser Premium
+              <Image src='/media/arrow-white.png' w='17px' m='0px 6px' />
+            </ButtonGroup>
+          </Text>
+        </Flex>
+
+        {/* ----------------------------------------Logo--------------------------- */}
+        <Flex w='full' maxHeight='80px' justifyContent='center' alignItems='center' pt={['8px', '14px', '24px']} pb={['8px', '14px', '24px']}  >
+          <Image src="/media/logo.png" w={['116px', '126px', '136px', '146px']} />
+        </Flex>
+
+      </header >
+
+      {/* ----------------------------------------Catálago----------------------- */}
+      <Container className='catalago' maxW='container.lg' mb='5' justifyContent='center'>
+        <Flex w='full' justifyContent='center'>
+          <Flex
+            w='1329px'
+            h='94px'
+            alignItems='center'
           >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
+            <Text fontWeight='700' fontSize='28px'>
+              <span className='border-custom'>Ca</span>tálogo
+            </Text>
+          </Flex>
+        </Flex>
+      </Container>
 
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
+      {/* ----------------------------------------Resultados--------------------- */}
+      <Container maxW='1329px' minH='75vh' mb='5' margin='auto' >
+        <Flex alignItems='left'>
+          <Box
+            className='result'
+            fontWeight='600'
+            fontSize='24px'
+            color='#202020'
+            pt='30px'
+            pb='15px'
+          >
+            Resultados
+          </Box>
+        </Flex>
 
-      <div className="mb-32 grid text-center lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
+        {/* ----------------------------------------Content----------------------- */}
+        {
+          !dataFamilies && (
+            <Flex w='full' h='100%' justifyContent='center' alignItems='center'>
+              <Spinner
+                w='50px'
+                h='50px'
+              />
+            </Flex>
+          )
+        }
+
+        {dataFamilies && (
+          <Flex className='container-items' flexWrap='wrap' gap='11' >
+            {dataFamilies?.map((map: any) => {
+              return (
+                <>
+                  <Card className='card-items' backgroundColor='#fff' border='1px solid #CCCCCC' w={['128px', '166px', '176px']} h='234px' borderRadius='8px 8px'>
+                    <CardHeader h='198px' >
+                      <Box display='flex' w='full' justifyContent='center' >
+                        <Image src={`https://plugin-storage.nyc3.digitaloceanspaces.com/families/images/${map?.id}.jpg`} 
+                        w='92px' m='25px 40px' className='image-familia'/>
+                      </Box>
+                    </CardHeader>
+                    <Divider orientation='horizontal' border='1px solid #CCCCCC' />
+                    <CardBody h='36px'>
+                      <Box display='flex' w='full' flexDir='row' justifyContent='space-between' alignItems='center' >
+                        <Box>
+                          <Text fontWeight='700' fontSize='10px' lineHeight='10px' p='3'>{map?.details?.name}</Text>
+                        </Box>
+                        <Divider orientation='vertical' bg='#000' />
+                        <Image src='/media/arrow.svg' w='12px' m='0px 6px' className='arrow' />
+                      </Box>
+                    </CardBody>
+                  </Card>
+                </>
+              )
+            })
+            }
+          </Flex>
+        )}
+      </Container>
+      <footer>
+        <Flex
+        className='footer-custom'
+          position='relative'
+          bottom='0'
+          marginTop='auto'
+          justifyContent='center'
+          alignItems='center'
+          mt='10'
+          w='100%'
+          h='65px'
+          p='24px 0'
+          backgroundColor='#E9E9E9'
+          fontFamily='Open sans'
+          fontWeight='400'
+          fontSize='16px'
+          lineHeight='22px'
         >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800 hover:dark:bg-opacity-30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Explore the Next.js 13 playground.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+          <Flex m='0px 20px'>
+            Sobre
+          </Flex>
+          <Flex m='0px 20px'>
+            FAQ
+          </Flex>
+          <Flex m='0px 20px'>
+            Termos de uso
+          </Flex>
+          <Flex m='0px 20px'>
+            Politica de privacidade
+          </Flex>
+        </Flex>
+      </footer>
+    </>
   )
 }

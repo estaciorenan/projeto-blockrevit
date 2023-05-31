@@ -2,26 +2,93 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+.border-custom {
+  text-align: center;
+  border-bottom: 4px solid transparent;
+  border-image: linear-gradient(0.25turn, #a11cf3, #d835c5);
+  border-image-slice: 1;
+  width: 100%;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+.catalago {
+  text-align: center;
+  border-top: 4px solid transparent;
+  border-image: linear-gradient(0.25turn, #a11cf3, #d835c5);
+  border-image-slice: 1;
+  width: 100%;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
+.arrow {
+  transform: rotate(-45deg);
+}
+
+.advertising {
+  background: rgba(36, 36, 36, 0.75);
+  backdrop-filter: blur(20px);
+}
+
+.button-advertising {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 0px;
+  gap: 36px;
+  margin-left: 15px;
+  width: 235px;
+  height: 43px;
+
   background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+    90deg,
+    rgba(161, 28, 243, 0.6) 0%,
+    rgba(216, 53, 197, 0.6) 100%
+  );
+  /* backdrop-filter: blur(20px); */
+  /* Note: backdrop-filter has minimal browser support */
+  border: 3px solid transparent;
+  border-radius: 8px !important;
+  border: linear-gradient(
+    90deg,
+    rgba(161, 28, 243, 0.6) 0%,
+    rgba(216, 53, 197, 0.6) 100%
+  );
+  border-image-slice: 1;
+}
+
+@media (max-width: 600px) {
+  .advertising {
+    visibility: hidden;
+    display: none;
+    height: 0px !important;
+  }
+
+  .border-custom {
+    margin-left: 20px;
+  }
+
+  .result {
+    margin-left: 20px;
+  }
+
+  .container-items{
+    margin-left:20px;
+    margin-bottom: 40px;
+  }
+
+  .card-items{
+    width: 160px !important;
+  }
+
+  .footer-custom{
+    flex-direction:column;
+    height: 150px !important;
+    margin:0 !important;
+  }
+
+  .footer-custom > div{
+    width: 100%;
+    text-align:left;
+    padding: 5px 20px !important;
+  }
 }
