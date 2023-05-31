@@ -19,7 +19,7 @@ Projeto Blocks Revit.
 Pré-requisitos: npm / yarn
 ```bash
 # clonar repositório
-git clone https://github.com/devsuperior/sds1-wmazoni
+git clone https://github.com/estaciorenan/projeto-blocksrevit.git
 # entrar na pasta do projeto front end web
 cd front-web
 # instalar dependências
