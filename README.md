@@ -21,7 +21,7 @@ Pré-requisitos: npm / yarn
 # clonar repositório
 git clone https://github.com/estaciorenan/projeto-blocksrevit.git
 # entrar na pasta do projeto front end web
-cd blocks
+cd projeto-blocksrevit
 # instalar dependências
 yarn install
 # executar o projeto
