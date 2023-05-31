@@ -9,7 +9,7 @@ Projeto Blocks Revit.
 
 # Tecnologias utilizadas
 ## Front end
-- HTML / CSS / JS / TypeScript
+- HTML / CSS / JS 
 - ReactJS
 - Typescript
 - Tailwind
